@@ -1,0 +1,3 @@
+user_id=5
+gallery_id=0
+photo_id=0

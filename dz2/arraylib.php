@@ -12,7 +12,7 @@
  * @return {mixed} vrijednost elementa pod kljucem $needle ako kljuc postoji, inace $default
  */
 function element($needle, $haystack, $default = NULL) {
-    return array_key_exists($needle) ? $haystack[$needle] : $default;
+    return array_key_exists($needle, $haystack) ? $haystack[$needle] : $default;
 }
 
 /**
