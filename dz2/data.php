@@ -1,5 +1,7 @@
 <?php
 
+require_once('const.php');
+
 /**
  * Funkcija prima asocijativno polje i pretvara ga u string pogodan za
  * spremanje u .txt datoteke. Listom $keys se definira zeljeni redosljed
@@ -61,4 +63,21 @@ function increment_id($idName) {
     file_put_contents('data/ids.txt', substr($newIDs, 0, -1));
 
     return $retId;
+}
+
+function find_user($userInfo) {
+    global $USER_KEYS;
+
+    $lines = file_get_contents('data/korisnici.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $user = my_deserialize($line, $USER_KEYS);
+            if ($user["email"] === $userInfo["email"] &&
+                $user["password"] === $userInfo["password"]) {
+
+                return $user;
+            }
+        }
+    }
+    return NULL;
 }

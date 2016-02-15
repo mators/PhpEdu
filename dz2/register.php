@@ -1,8 +1,8 @@
-<?php
+<?php session_start();
 
 require_once('../dz1/htmllib.php');
 require_once('arraylib.php');
-require_once('serializator.php');
+require_once('data.php');
 require_once('const.php');
 
 header('Content-Type: text/html; charset=utf-8');
