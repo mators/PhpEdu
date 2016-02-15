@@ -1,0 +1,14 @@
+# Vagrant
+/.vagrant
+/vagrant
+/Vagrantfile
+
+# Images
+*/images
+
+# osx
+/.DS_Store
+*/.DS_Store
+
+# PHP Storm
+/.idea

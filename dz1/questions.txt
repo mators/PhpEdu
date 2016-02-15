@@ -1,0 +1,22 @@
+# broj unutar viticastih zagrada oznacava o kojem tipu pitanja se radi
+# 1 - pitanje koje ima samo jedan tocan odgovor
+# 2 - pitanje koje ima vise tocnih odgovora
+# 3 - pitanje na koje korisnik mora sam unijeti odgovor
+
+# format pitanja u kojem je tocan samo jedan odgovor
+Koja od navedenih životinja nije divlja mačka?{1}:Lav,Tigar,Puma,Pas=Pas
+Izbaci uljeza.{1}:Java,PHP,C#,C++=PHP
+Izbaci uljeza.{1}:MongoDB,Riak,PostgreSQL,Neo4j=PostgreSQL
+Koja vrsta baze nije ponuđena kao odgovor u prošlom pitanju?{1}:Relacijska,Objektna,Graph baza,Key-value baza=Objektna
+
+# format pitanja u kojem je tocno vise odgovora
+Tko je na NBA draftu 1984. godine izabran ispred Michaela Jorada?{2}:Charles Barkley,Hakeem Olajuwon,Scottie Pippen,Sam Bowie=Hakeem Olajuwon,Sam Bowie
+Označi sve FPS igre.{2}:Counter-strike,Dota,Call Of Duty,Battlefield=Counter-strike,Call Of Duty,Battlefield
+Koje su sve zgrade FER-a?{2}:A,C,E,G=A,C
+Koji je najbolji auto?{2}:Golf 2,Golf 2,Golf 2,Golf 2=Golf 2,Golf 2,Golf 2,Golf 2
+
+# format pitanja u kojem korisnik mora sam unijeti odgovor
+# tocnost korisnikovog odgovora ne smije ovisiti o koristenju malih i velikih slova,
+# odnosno odgovori ‘jedan’i ‘jEdAN’ moraju biti jednaki
+Koji je ekvivalent funkciji sizeof u PHP-u?{3}:=count
+Where is Zed?{3}:=Zed's dead
