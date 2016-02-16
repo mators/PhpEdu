@@ -7,15 +7,15 @@ require_once('const.php');
 
 header('Content-Type: text/html; charset=utf-8');
 
-$err = array();
-$newUser = array();
-
 # Ako je korisnik vec ulogiran, preusmjeri.
 if (($user = element("user", $_SESSION)) !== NULL) {
     $url = "http://$_SERVER[HTTP_HOST]/dz2";
     header("Location: ".$url);
     die();
 }
+
+$err = array();
+$newUser = array();
 
 # Ako je POST, validacija.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

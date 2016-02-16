@@ -156,11 +156,16 @@ echo create_element("div", true, [ "contents" => [
     ])
 ]]);
 
-# Link na pocetnu
+# Navigacija
 echo create_element("div", true, [ "contents" => [
     create_element("a", true, [
         "href" => "http://$_SERVER[HTTP_HOST]/dz2",
         "contents" => "Početna stranica"
+    ]),
+    " ",
+    create_element("a", true, [
+        "href" => "http://$_SERVER[HTTP_HOST]/dz2/createGallery.php",
+        "contents" => "Dodaj galeriju"
     ]),
     " ",
     create_element("a", true, [
@@ -169,9 +174,9 @@ echo create_element("div", true, [ "contents" => [
     ])
 ]]);
 
-# Naslov
+# Ime
 echo create_element("p", true, [ "contents" => [
-    "Naslov: ",
+    "Ime slike: ",
     create_input(["type" => "text", "name" => "title", "maxlength" => "100", "value" => $formData["title"]]),
     create_element("span", true, [ "style" => "color:red", "contents" => $err["title"]])
 ]]);

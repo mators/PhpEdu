@@ -13,8 +13,8 @@ begin_body([]);
 
 if (($user = element("user", $_SESSION)) !== NULL) {
 
+    # Trenutni korisnik
     echo create_element("div", true, [ "contents" => [
-
         $user["firstname"]." ".$user["lastname"]." ",
 
         create_element("a", true, [
@@ -23,10 +23,16 @@ if (($user = element("user", $_SESSION)) !== NULL) {
         ])
     ]]);
 
+    # Navigacija
     echo create_element("div", true, [ "contents" => [
         create_element("a", true, [
             "href" => "http://$_SERVER[HTTP_HOST]/dz2",
             "contents" => "Početna stranica"
+        ]),
+        " ",
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/createGallery.php",
+            "contents" => "Dodaj galeriju"
         ]),
         " ",
         create_element("a", true, [

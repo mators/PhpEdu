@@ -1,2 +1,4 @@
 1;ovo je opis galerije;Naslov galerije;1
 2;;Nova galerija;1
+3;;Galerija stvorena u obrascu;1
+4;ccc;<h1>opasna galerija</h1>;1
