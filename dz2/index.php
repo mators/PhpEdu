@@ -13,24 +13,44 @@ begin_body([]);
 
 if (($user = element("user", $_SESSION)) !== NULL) {
 
-    echo "POZDRAV ".$user["firstname"]." ".$user["lastname"];
+    echo create_element("div", true, [ "contents" => [
 
-    echo create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
-        "contents" => "Logout "
-    ]);
+        $user["firstname"]." ".$user["lastname"]." ",
+
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
+            "contents" => "Logout"
+        ])
+    ]]);
+
+    echo create_element("div", true, [ "contents" => [
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2",
+            "contents" => "Početna stranica"
+        ]),
+        " ",
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/photoUpload.php",
+            "contents" => "Prijenos slika"
+        ])
+    ]]);
 
 } else {
 
-    echo create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/register.php",
-        "contents" => "Registracija "
-    ]);
+    echo create_element("div", true, [ "contents" => [
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/register.php",
+            "contents" => "Registracija"
+        ]),
 
-    echo create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/login.php",
-        "contents" => "Login"
-    ]);
+        " ",
+
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/login.php",
+            "contents" => "Login"
+        ])
+    ]]);
+
 }
 
 end_body();

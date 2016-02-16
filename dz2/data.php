@@ -65,6 +65,12 @@ function increment_id($idName) {
     return $retId;
 }
 
+/**
+ * Vraca korisnika sa emailom i lozinkom definiranim u $userInfo ili NULL ako takav korisnik ne postoji.
+ *
+ * @param $userInfo array oblika ['email' => '...', 'password' => '...' ]
+ * @return array|null dohvaceni korisnik iz korisnici.txt ili null.
+ */
 function find_user($userInfo) {
     global $USER_KEYS;
 
@@ -80,4 +86,26 @@ function find_user($userInfo) {
         }
     }
     return NULL;
+}
+
+/**
+ * Dohvaca sve galerije korisnika s id-em $userId.
+ *
+ * @param $userId string id korisnika cije galerije se dohvacaju.
+ * @return array Korisnikove galerije.
+ */
+function get_users_galleries($userId) {
+    global $GALLERY_KEYS;
+
+    $galleries = [];
+    $lines = file_get_contents('data/galerije.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $gallery = my_deserialize($line, $GALLERY_KEYS);
+            if ($gallery["userId"] == $userId) {
+                array_push($galleries, $gallery);
+            }
+        }
+    }
+    return $galleries;
 }

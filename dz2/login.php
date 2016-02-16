@@ -10,6 +10,13 @@ header('Content-Type: text/html; charset=utf-8');
 $err = array();
 $userInfo = array();
 
+# Ako je korisnik vec ulogiran, preusmjeri.
+if (($user = element("user", $_SESSION)) !== NULL) {
+    $url = "http://$_SERVER[HTTP_HOST]/dz2";
+    header("Location: ".$url);
+    die();
+}
+
 # Ako je POST, validacija.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -51,6 +58,14 @@ begin_head();
 end_head();
 begin_body([]);
 start_form("", "post");
+
+# Link na pocetnu
+echo create_element("div", true, [ "contents" => [
+    create_element("a", true, [
+        "href" => "http://$_SERVER[HTTP_HOST]/dz2",
+        "contents" => "Početna stranica"
+    ])
+]]);
 
 # Email
 echo create_element("p", true, [ "contents" => [

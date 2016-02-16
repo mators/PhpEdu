@@ -64,9 +64,14 @@ function end_body() {
  *
  * @param {String} $action relativna ili apsolutna putanja do skrtipte za obradu obrasca
  * @param {String} $method GET ili POST
+ * @param bool $upload ako je forma za upload datoteke, stavi true
  */
-function start_form($action, $method) {
-    echo "<form action=\"" . $action . "\" method=\"" . $method . "\" >";
+function start_form($action, $method, $upload = false) {
+    echo "<form action=\"" . $action . "\" method=\"" . $method . "\" ";
+    if ($upload) {
+        echo 'enctype="multipart/form-data" ';
+    }
+    echo ">";
 }
 
 /**
