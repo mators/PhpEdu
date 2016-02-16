@@ -49,7 +49,6 @@ begin_html();
 begin_head();
 end_head();
 begin_body([]);
-start_form("", "post");
 
 # Trenutni korisnik
 echo create_element("div", true, [ "contents" => [
@@ -78,6 +77,8 @@ echo create_element("div", true, [ "contents" => [
         "contents" => "Prijenos slika"
     ])
 ]]);
+
+start_form("", "post");
 
 # Ime
 echo create_element("p", true, [ "contents" => [

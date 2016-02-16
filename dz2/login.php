@@ -57,7 +57,6 @@ begin_html();
 begin_head();
 end_head();
 begin_body([]);
-start_form("", "post");
 
 # Link na pocetnu
 echo create_element("div", true, [ "contents" => [
@@ -66,6 +65,8 @@ echo create_element("div", true, [ "contents" => [
         "contents" => "Početna stranica"
     ])
 ]]);
+
+start_form("", "post");
 
 # Email
 echo create_element("p", true, [ "contents" => [
