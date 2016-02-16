@@ -27,6 +27,7 @@ function create_dropdown_options() {
 
 /**
  * Mijenja velicinu slike $imageSource na $newWidth x $newHeight i takvu ju sprema pod imenom $imageName.
+ * Sve slike sprema kao .jpg
  *
  * @param $newWidth
  * @param $newHeight
@@ -111,16 +112,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         # Small
-        save_resized_image_copy($SMALL, $SMALL, $dim[0], $dim[1], $imageSource, "images/".$photoId."_small.".$extension);
+        save_resized_image_copy($SMALL, $SMALL, $dim[0], $dim[1], $imageSource, "images/".$photoId."_small.jpg");
 
         # Medium
         if ($dim[0] > $MEDIUM || $dim[1] > $MEDIUM) {
-            save_resized_image_copy($MEDIUM, $MEDIUM, $dim[0], $dim[1], $imageSource, "images/".$photoId."_medium.".$extension);
+            save_resized_image_copy($MEDIUM, $MEDIUM, $dim[0], $dim[1], $imageSource, "images/".$photoId."_medium.jpg");
         }
 
         # Large
         if ($dim[0] > $LARGE || $dim[1] > $LARGE) {
-            save_resized_image_copy($LARGE, $LARGE, $dim[0], $dim[1], $imageSource, "images/".$photoId."_large.".$extension);
+            save_resized_image_copy($LARGE, $LARGE, $dim[0], $dim[1], $imageSource, "images/".$photoId."_large.jpg");
         }
 
         # Original
