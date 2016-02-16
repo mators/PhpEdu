@@ -38,6 +38,11 @@ if (($user = element("user", $_SESSION)) !== NULL) {
         create_element("a", true, [
             "href" => "http://$_SERVER[HTTP_HOST]/dz2/photoUpload.php",
             "contents" => "Prijenos slika"
+        ]),
+        " ",
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"],
+            "contents" => "Pregled slika"
         ])
     ]]);
 

@@ -109,3 +109,25 @@ function get_users_galleries($userId) {
     }
     return $galleries;
 }
+
+/**
+ * Dohvaca sve slike korisnika s id-em $userId.
+ *
+ * @param $userId string id korisnika cije slike se dohvacaju.
+ * @return array Korisnikove galerije.
+ */
+function get_users_images($userId) {
+    global $PHOTO_KEYS;
+
+    $images = [];
+    $lines = file_get_contents('data/slike.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $image = my_deserialize($line, $PHOTO_KEYS);
+            if ($image["userId"] == $userId) {
+                array_push($images, $image);
+            }
+        }
+    }
+    return $images;
+}
