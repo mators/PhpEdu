@@ -3,27 +3,9 @@
 require_once('../dz1/htmllib.php');
 require_once('arraylib.php');
 require_once('data.php');
+require_once('commonHTML.php');
 
 header('Content-Type: text/html; charset=utf-8');
-
-/**
- * Stvara <option value='id galerije'>ime galerije</option>
- * elemente za svaku galeriju ternutno ulogiranog korisnika i vraca ih.
- *
- * @return array Lista galerija trenutnog korisnika u html tagu option.
- */
-function create_dropdown_options() {
-    global $user;
-
-    $options = [];
-    foreach (get_users_galleries($user["id"]) as $gallery) {
-        array_push($options, create_element("option", true, [
-            "value" => $gallery["id"],
-            "contents" => $gallery["title"]
-        ]));
-    }
-    return $options;
-}
 
 /**
  * Mijenja velicinu slike $imageSource na $newWidth x $newHeight i takvu ju sprema pod imenom $imageName.
@@ -156,27 +138,7 @@ echo create_element("div", true, [ "contents" => [
 ]]);
 
 # Navigacija
-echo create_element("div", true, [ "contents" => [
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2",
-        "contents" => "Početna stranica"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/createGallery.php",
-        "contents" => "Dodaj galeriju"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/photoUpload.php",
-        "contents" => "Prijenos slika"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"],
-        "contents" => "Pregled slika"
-    ])
-]]);
+echo create_navigation($user["id"]);
 
 start_form("", "post", true);
 
@@ -197,7 +159,7 @@ echo create_element("p", true, [ "contents" => [
 # Galerija
 echo create_element("p", true, [ "contents" => [
     "Galerija: ",
-    create_select([ "name" => "galleryId", "contents" => create_dropdown_options()]),
+    create_select([ "name" => "galleryId", "contents" => create_dropdown_options($user["id"])]),
     create_element("span", true, [ "style" => "color:red", "contents" => $err["gallery"]])
 ]]);
 

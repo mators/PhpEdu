@@ -3,6 +3,7 @@
 require_once('../dz1/htmllib.php');
 require_once('arraylib.php');
 require_once('data.php');
+require_once('commonHTML.php');
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -11,13 +12,31 @@ function create_photo_elements() {
 
     $elements = [];
     foreach (get_users_images($user["id"]) as $image) {
-        array_push($elements, create_element("div", true, [ "contents" => [
-            create_element("img", false, ["src" => "getPhoto.php?" . http_build_query([
+        array_push($elements, create_table_row([ "contents" => [
+
+            create_table_cell(["contents" =>
+                create_element("img", false, ["src" => "getPhoto.php?" . http_build_query([
                     "id" => $image["id"],
                     "size" => "small"
                 ])
-            ]),
-            create_element("span", true, ["contents" => "NASLOV"])
+            ])]),
+
+            create_table_cell(["contents" => [
+
+                create_element("b", true, ["contents" => "Ime slike: "]),
+                $image["title"],
+                create_element("br", false, []),
+
+                create_element("b", true, ["contents" => "Ime galerije: "]),
+                get_gallery($image["galleryId"])["title"],
+                create_element("br", false, []),
+
+                create_element("a", true, [
+                    "href" => "http://$_SERVER[HTTP_HOST]/dz2/editPhoto.php?id=".$image["id"],
+                    "contents" => "Uredi sliku"
+                ])
+            ]])
+
         ]]));
     }
     return $elements;
@@ -49,30 +68,10 @@ echo create_element("div", true, [ "contents" => [
 ]]);
 
 # Navigacija
-echo create_element("div", true, [ "contents" => [
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2",
-        "contents" => "Početna stranica"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/createGallery.php",
-        "contents" => "Dodaj galeriju"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/photoUpload.php",
-        "contents" => "Prijenos slika"
-    ]),
-    " ",
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"],
-        "contents" => "Pregled slika"
-    ])
-]]);
+echo create_navigation($user["id"]);
 
 # Popis svih slika
-echo create_element("div", true, [ "contents" => create_photo_elements()]);
+echo create_element("table", true, [ "contents" => create_photo_elements()]);
 
 end_body();
 end_html();

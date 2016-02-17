@@ -2,6 +2,7 @@
 
 require_once('../dz1/htmllib.php');
 require_once('arraylib.php');
+require_once('commonHTML.php');
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -24,27 +25,7 @@ if (($user = element("user", $_SESSION)) !== NULL) {
     ]]);
 
     # Navigacija
-    echo create_element("div", true, [ "contents" => [
-        create_element("a", true, [
-            "href" => "http://$_SERVER[HTTP_HOST]/dz2",
-            "contents" => "Početna stranica"
-        ]),
-        " ",
-        create_element("a", true, [
-            "href" => "http://$_SERVER[HTTP_HOST]/dz2/createGallery.php",
-            "contents" => "Dodaj galeriju"
-        ]),
-        " ",
-        create_element("a", true, [
-            "href" => "http://$_SERVER[HTTP_HOST]/dz2/photoUpload.php",
-            "contents" => "Prijenos slika"
-        ]),
-        " ",
-        create_element("a", true, [
-            "href" => "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"],
-            "contents" => "Pregled slika"
-        ])
-    ]]);
+    echo create_navigation($user["id"]);
 
 } else {
 

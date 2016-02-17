@@ -131,3 +131,49 @@ function get_users_images($userId) {
     }
     return $images;
 }
+
+/**
+ * Iz galerije.txt dohvaca podatke o galeriji sa id-em $galleryID.
+ *
+ * @param $galleryID string id galerije koja se trazi
+ * @return array|null Vraca null ako ne postoji galerija s trazenim id-em.
+ */
+function get_gallery($galleryID) {
+    global $GALLERY_KEYS;
+
+    $lines = file_get_contents('data/galerije.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $gallery = my_deserialize($line, $GALLERY_KEYS);
+            if ($gallery["id"] === $galleryID) {
+                return $gallery;
+            }
+        }
+    }
+    return NULL;
+}
+
+/**
+ * Iz slike.txt dohvaca podatke o slici sa id-em $imageID.
+ *
+ * @param $imageID string id slike koja se trazi
+ * @return array|null Vraca null ako ne postoji slika s trazenim id-em.
+ */
+function get_image($imageID) {
+    global $PHOTO_KEYS;
+
+    if ($imageID === NULL) {
+        return NULL;
+    }
+
+    $lines = file_get_contents('data/slike.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $image = my_deserialize($line, $PHOTO_KEYS);
+            if ($image["id"] === $imageID) {
+                return $image;
+            }
+        }
+    }
+    return NULL;
+}
