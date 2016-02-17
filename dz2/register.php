@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     # Ako je sve OK, spremi novog korisnika i preusmjeri ga na login.
     if (empty($err)) {
         $newUser["id"] = increment_id("user_id");
-        file_put_contents("data/korisnici.txt", my_serialize($newUser, $USER_KEYS), FILE_APPEND | LOCK_EX);
+        save_user($newUser);
 
         $url = "http://$_SERVER[HTTP_HOST]/dz2/login.php";
         header("Location: ".$url);

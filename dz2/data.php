@@ -177,3 +177,55 @@ function get_image($imageID) {
     }
     return NULL;
 }
+
+/**
+ * Mijenja sliku u slike.txt. $editedImage mora sadrzavati id slike koja postoji.
+ *
+ * @param $editedImage array Uredena slika.
+ */
+function edit_image($editedImage, $delete = false) {
+    global $PHOTO_KEYS;
+
+    $lines = file_get_contents('data/slike.txt');
+    foreach (explode("\n", $lines) as $line) {
+        if (!empty($line)) {
+            $image = my_deserialize($line, $PHOTO_KEYS);
+            if ($image["id"] === $editedImage["id"]) {
+                if (!$delete) {
+                    file_put_contents("data/tmp.txt", my_serialize($editedImage, $PHOTO_KEYS), FILE_APPEND | LOCK_EX);
+                }
+            } else {
+                file_put_contents("data/tmp.txt", $line."\n", FILE_APPEND | LOCK_EX);
+            }
+        }
+    }
+    unlink('data/slike.txt');
+    rename('data/tmp.txt', 'data/slike.txt');
+}
+
+/**
+ * Sprema sliku u slike.txt
+ * @param $image array
+ */
+function save_image($image) {
+    global $PHOTO_KEYS;
+    file_put_contents("data/slike.txt", my_serialize($image, $PHOTO_KEYS), FILE_APPEND | LOCK_EX);
+}
+
+/**
+ * Sprema galeriju u galerije.txt
+ * @param $gallery array
+ */
+function save_gallery($gallery) {
+    global $GALLERY_KEYS;
+    file_put_contents("data/galerije.txt", my_serialize($gallery, $GALLERY_KEYS), FILE_APPEND | LOCK_EX);
+}
+
+/**
+ * Sprema korisnika u korisnici.txt
+ * @param $user array
+ */
+function save_user($user) {
+    global $USER_KEYS;
+    file_put_contents("data/korisnici.txt", my_serialize($user, $USER_KEYS), FILE_APPEND | LOCK_EX);
+}

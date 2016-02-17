@@ -1,6 +1,7 @@
 <?php
 
 require_once('../dz1/htmllib.php');
+require_once('data.php');
 
 /**
  * Stvara URL-ove za navigaciju po stranici za korisnika sa id-em $userID.
@@ -48,4 +49,21 @@ function create_dropdown_options($userID) {
         ]));
     }
     return $options;
+}
+
+/**
+ * Stvara html element sa imenom i rezimenom korisnika $user i linkom za logout.
+ *
+ * @param $user array Korisnik.
+ * @return string HTML element.
+ */
+function create_current_user($user) {
+    return create_element("div", true, [ "contents" => [
+        $user["firstname"]." ".$user["lastname"]." ",
+
+        create_element("a", true, [
+            "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
+            "contents" => "Logout"
+        ])
+    ]]);
 }

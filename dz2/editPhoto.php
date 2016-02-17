@@ -17,6 +17,44 @@ if ($user === NULL || $photoID === NULL || $user["id"] !== $image["userId"]) {
     die();
 }
 
+$err = array();
+
+# Ako je POST, validacija slike.
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $image = elements($PHOTO_KEYS, $_POST);
+
+    if ($image["title"]) {
+        if (strlen($image["title"]) > 100) {
+            $err["title"] = "Ime slike smije imati najviše 100 znakova.";
+        }
+    } else {
+        $err["title"] = "Ime slike je obavezno.";
+    }
+
+    if ($image["description"] && strlen($image["title"]) > 500) {
+        $err["description"] = "Opis slike smije imati najviše 500 znakova.";
+    }
+
+    if (!$image["galleryId"]) {
+        $err["gallery"] = "Potrebno je odabrati galeriju.";
+    }
+
+    # Ako je sve OK, uredi sliku i preusmjeri.
+    if (empty($err)) {
+
+        # Uredi zapis u slike.txt
+        $image["id"] = $photoID;
+        $image["userId"] = $user["id"];
+        edit_image($image);
+
+        # Redirect
+        $url = "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"];
+        header("Location: ".$url);
+        die();
+    }
+}
+
 create_doctype();
 begin_html();
 begin_head();
@@ -24,14 +62,7 @@ end_head();
 begin_body([]);
 
 # Trenutni korisnik
-echo create_element("div", true, [ "contents" => [
-    $user["firstname"]." ".$user["lastname"]." ",
-
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
-        "contents" => "Logout"
-    ])
-]]);
+echo create_current_user($user);
 
 # Navigacija
 echo create_navigation($user["id"]);
@@ -63,11 +94,18 @@ echo create_input(["type" => "submit", "value" => "Uredi sliku"]);
 
 end_form();
 
-echo create_element("img", false, ["src" => "getPhoto.php?" .
-    http_build_query([
-        "id" => $image["id"],
+echo create_element("img", false, [
+    "style" => "float: left",
+    "src" => "getPhoto.php?" . http_build_query([
+        "id" => $photoID,
         "size" => "original"
     ])
+]);
+
+echo create_element("a", true, [
+    "style" => "float: left",
+    "href" => "http://$_SERVER[HTTP_HOST]/dz2/deletePhoto.php?id=".$photoID,
+    "contents" => "Obriši sliku"
 ]);
 
 end_body();

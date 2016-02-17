@@ -15,14 +15,7 @@ begin_body([]);
 if (($user = element("user", $_SESSION)) !== NULL) {
 
     # Trenutni korisnik
-    echo create_element("div", true, [ "contents" => [
-        $user["firstname"]." ".$user["lastname"]." ",
-
-        create_element("a", true, [
-            "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
-            "contents" => "Logout"
-        ])
-    ]]);
+    echo create_current_user($user);
 
     # Navigacija
     echo create_navigation($user["id"]);

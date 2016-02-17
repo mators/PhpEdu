@@ -54,29 +54,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $err["description"] = "Opis slike smije imati najviše 500 znakova.";
     }
 
+    if (!$formData["galleryId"]) {
+        $err["gallery"] = "Potrebno je odabrati galeriju.";
+    }
+
     if ($file["error"] > 0) {
         $err["file"] = "Pogreška pri učitavanju slike.";
     } else {
 
-        if ($file["size"] > 512000) {
-            $err["file"] = "Slika ne smije biti veća od 500kB.";
-        }
-
-        if (!in_array($file["type"], $ALLOWED_FILE_TYPES)) {
+        if (!in_array(strtolower($file["type"]), $ALLOWED_FILE_TYPES)) {
             $err["file"] = "Nedopušteni format.";
-        }
+        } else {
 
-        list($width, $height) = getimagesize($file['tmp_name']);
+            if ($file["size"] > 512000) {
+                $err["file"] = "Slika ne smije biti veća od 500kB.";
+            }
 
-        if ($width < $MEDIUM || $height < $MEDIUM) {
-            $err["file"] = "Slika ne smije biti manja od 128x128.";
+            list($width, $height) = getimagesize($file['tmp_name']);
+
+            if ($width < $MEDIUM || $height < $MEDIUM) {
+                $err["file"] = "Slika ne smije biti manja od 128x128.";
+            }
         }
     }
 
     # Ako je sve OK, spremi sliku i preusmjeri.
     if (empty($err)) {
         $photoId = increment_id("photo_id");
-        $extension = end(explode(".", $file["name"]));
         $dim = getimagesize($file['tmp_name']);
 
         switch(strtolower($dim['mime']))
@@ -107,15 +111,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         # Original
-        move_uploaded_file($file['tmp_name'], "images/".$photoId."_original.".$extension);
+        save_resized_image_copy($dim[0], $dim[1], $dim[0], $dim[1], $imageSource, "images/".$photoId."_original.jpg");
+        unlink($file['tmp_name']);
 
         # Dodaj zapis u slike.txt
         $formData["id"] = $photoId;
         $formData["userId"] = $user["id"];
-        file_put_contents("data/slike.txt", my_serialize($formData, $PHOTO_KEYS), FILE_APPEND | LOCK_EX);
+        save_image($formData);
 
         # Redirect
-        $url = "http://$_SERVER[HTTP_HOST]/dz2/login.php";
+        $url = "http://$_SERVER[HTTP_HOST]/dz2/listPhotos.php?id=".$user["id"];
         header("Location: ".$url);
         die();
     }
@@ -128,14 +133,7 @@ end_head();
 begin_body([]);
 
 # Trenutni korisnik
-echo create_element("div", true, [ "contents" => [
-    $user["firstname"]." ".$user["lastname"]." ",
-
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
-        "contents" => "Logout"
-    ])
-]]);
+echo create_current_user($user);
 
 # Navigacija
 echo create_navigation($user["id"]);
@@ -152,7 +150,7 @@ echo create_element("p", true, [ "contents" => [
 # Opis
 echo create_element("p", true, [ "contents" => [
     "Opis: ",
-    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "value" => $formData["description"]]),
+    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "contents" => $formData["description"]]),
     create_element("span", true, [ "style" => "color:red", "contents" => $err["description"]])
 ]]);
 

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($err)) {
         $newGallery["id"] = increment_id("gallery_id");
         $newGallery["userId"] = $user["id"];
-        file_put_contents("data/galerije.txt", my_serialize($newGallery, $GALLERY_KEYS), FILE_APPEND | LOCK_EX);
+        save_gallery($newGallery);
 
         $url = "http://$_SERVER[HTTP_HOST]/dz2";
         header("Location: ".$url);
@@ -52,14 +52,7 @@ end_head();
 begin_body([]);
 
 # Trenutni korisnik
-echo create_element("div", true, [ "contents" => [
-    $user["firstname"]." ".$user["lastname"]." ",
-
-    create_element("a", true, [
-        "href" => "http://$_SERVER[HTTP_HOST]/dz2/logout.php",
-        "contents" => "Logout"
-    ])
-]]);
+echo create_current_user($user);
 
 # Navigacija
 echo create_navigation($user["id"]);
