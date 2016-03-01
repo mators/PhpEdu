@@ -70,29 +70,29 @@ start_form("", "post");
 # Ime
 echo create_element("p", true, [ "contents" => [
     "Ime: ",
-    create_input(["type" => "text", "name" => "firstname", "value" => $newUser["firstname"]/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["firstname"]])
+    create_input(["type" => "text", "name" => "firstname", "value" => element("firstname", $newUser, "")/*, "required" => ""*/]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("firstname", $err, "")])
 ]]);
 
 # Prezime
 echo create_element("p", true, [ "contents" => [
     "Prezime: ",
-    create_input(["type" => "text", "name" => "lastname", "value" => $newUser["lastname"]/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["lastname"]])
+    create_input(["type" => "text", "name" => "lastname", "value" => element("lastname", $newUser, "")/*, "required" => ""*/]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("lastname", $err, "")])
 ]]);
 
 # Email
 echo create_element("p", true, [ "contents" => [
     "Email: ",
-    create_input(["type" => "email", "name" => "email", "value" => $newUser["email"]/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["email"]])
+    create_input(["type" => "email", "name" => "email", "value" => element("email", $newUser, "")/*, "required" => ""*/]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("email", $err, "")])
 ]]);
 
 # Lozinka
 echo create_element("p", true, [ "contents" => [
     "Lozinka: ",
     create_input(["type" => "password", "name" => "password"/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["password"]])
+    create_element("span", true, [ "style" => "color:red", "contents" => element("password", $err, "")])
 ]]);
 
 echo create_input(["type" => "submit", "value" => "Registriraj se!"]);

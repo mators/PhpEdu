@@ -71,15 +71,15 @@ start_form("", "post");
 # Email
 echo create_element("p", true, [ "contents" => [
     "Email: ",
-    create_input(["type" => "email", "name" => "email", "value" => $userInfo["email"]/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["email"]])
+    create_input(["type" => "email", "name" => "email", "value" => element("email", $userInfo, "")/*, "required" => ""*/]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("email", $err, "")])
 ]]);
 
 # Lozinka
 echo create_element("p", true, [ "contents" => [
     "Lozinka: ",
     create_input(["type" => "password", "name" => "password"/*, "required" => ""*/]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["password"]])
+    create_element("span", true, [ "style" => "color:red", "contents" => element("password", $err, "")])
 ]]);
 
 echo create_input(["type" => "submit", "value" => "Prijava"]);

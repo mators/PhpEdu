@@ -62,15 +62,15 @@ start_form("", "post");
 # Ime
 echo create_element("p", true, [ "contents" => [
     "Ime galerije: ",
-    create_input(["type" => "text", "name" => "title", "maxlength" => "100", "value" => $formData["title"]]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["title"]])
+    create_input(["type" => "text", "name" => "title", "maxlength" => "100", "value" => element("title", $newGallery, "")]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("title", $err, "")])
 ]]);
 
 # Opis
 echo create_element("p", true, [ "contents" => [
     "Opis: ",
-    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "value" => $formData["description"]]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["description"]])
+    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "contents" => element("description", $newGallery, "")]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("description", $err, "")])
 ]]);
 
 echo create_input(["type" => "submit", "value" => "Stvori galeriju"]);

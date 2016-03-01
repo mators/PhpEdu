@@ -3,3 +3,4 @@
 3;;Galerija stvorena u obrascu;1
 4;ccc;<h1>opasna galerija</h1>;1
 5;;OS galerija;2
+6;the best gallery ever;gallery;6

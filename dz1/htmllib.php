@@ -201,7 +201,11 @@ function create_table_cell($params) {
  * @return {String} znakova jednak HTML k^odu elementa
  */
 function create_element($name, $closed = true, $params) {
-    $cont = $params["contents"];
+    if (isset($params["contents"])) {
+        $cont = $params["contents"];
+    } else {
+        $cont = null;
+    }
 
     if (is_array($cont)) {
         $cont = implode("", $cont);

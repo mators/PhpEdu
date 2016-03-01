@@ -143,29 +143,29 @@ start_form("", "post", true);
 # Ime
 echo create_element("p", true, [ "contents" => [
     "Ime slike: ",
-    create_input(["type" => "text", "name" => "title", "maxlength" => "100", "value" => $formData["title"]]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["title"]])
+    create_input(["type" => "text", "name" => "title", "maxlength" => "100", "value" => element("title", $formData, "")]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("title", $err, "")])
 ]]);
 
 # Opis
 echo create_element("p", true, [ "contents" => [
     "Opis: ",
-    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "contents" => $formData["description"]]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["description"]])
+    create_element("textarea", true, [ "name" => "description", "maxlength" => "500", "contents" => element("description", $formData, "")]),
+    create_element("span", true, [ "style" => "color:red", "contents" => element("description", $err, "")])
 ]]);
 
 # Galerija
 echo create_element("p", true, [ "contents" => [
     "Galerija: ",
     create_select([ "name" => "galleryId", "contents" => create_dropdown_options($user["id"])]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["gallery"]])
+    create_element("span", true, [ "style" => "color:red", "contents" => element("gallery", $err, "")])
 ]]);
 
 # Slika
 echo create_element("p", true, [ "contents" => [
     "Slika: ",
     create_input(["type" => "file", "name" => "file"]),
-    create_element("span", true, [ "style" => "color:red", "contents" => $err["file"]])
+    create_element("span", true, [ "style" => "color:red", "contents" => element("file", $err, "")])
 ]]);
 
 echo create_input(["type" => "submit", "value" => "Pošalji sliku"]);
