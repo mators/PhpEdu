@@ -12,3 +12,6 @@
 
 # PHP Storm
 /.idea
+
+# phpmyadmin
+/phpmyadmin
