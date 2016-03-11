@@ -30,7 +30,7 @@ class PieChart extends Chart {
         $centerH = $this->height / 2 + $fontHeight - $threeDHeight;
 
         // 3D Shade
-        foreach ($this->data_collections as $key => $data_collection) {
+        foreach (array_slice($this->data_collections, 0, -1, true) as $key => $data_collection) {
 
             // Set color
             $color = imagecolorallocate(

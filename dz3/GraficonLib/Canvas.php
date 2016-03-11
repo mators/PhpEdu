@@ -7,7 +7,7 @@ namespace hr\sofascore\dz3\graficonlib;
  * Razred koji predstavlja "platno" na koje je moguce crtati razlicite
  * grafikone i to vise njih istovremeno.
  */
-class Canvas {
+class Canvas implements Saveable {
 
     /**
      * Polje u koje se spremaju grafikoni koje je potrebno
@@ -100,5 +100,13 @@ class Canvas {
         }
 
         return $im;
+    }
+
+    /**
+     * Sprema platno u datoteku.
+     * @param string $file
+     */
+    public function save($file) {
+        imagepng($this->render(), $file);
     }
 }
