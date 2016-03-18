@@ -20,7 +20,7 @@ class Photo implements Model {
      * Naslov slike.
      * @var string
      */
-    private $title;
+    private $name;
 
     /**
      * Opis slike.
@@ -41,19 +41,28 @@ class Photo implements Model {
     private $galleryID;
 
     /**
+     * @var string
+     */
+    private $photo;
+
+    private $errors;
+
+    /**
      * Stvara sliku.
      * @param $pictureID int
-     * @param $title string
+     * @param $name string
      * @param $description string
      * @param $userID int
      * @param $galleryID int
+     * @param $photo string
      */
-    public function __construct($pictureID, $title, $description, $userID, $galleryID) {
+    public function __construct($name, $description, $userID, $galleryID, $photo, $pictureID = null) {
         $this->pictureID = $pictureID;
-        $this->title = $title;
+        $this->name = $name;
         $this->description = $description;
         $this->userID = $userID;
         $this->galleryID = $galleryID;
+        $this->photo = $photo;
     }
 
     /**
@@ -66,8 +75,8 @@ class Photo implements Model {
     /**
      * @return mixed
      */
-    public function getTitle() {
-        return $this->title;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -91,16 +100,67 @@ class Photo implements Model {
         return $this->galleryID;
     }
 
-    public function equals(Model $model) {
-        // TODO: Implement equals() method.
+    /**
+     * @return string
+     */
+    public function getPhoto() {
+        return $this->photo;
     }
 
-    public function serialize() {
-        // TODO: Implement serialize() method.
+    /**
+     * @param resource $photo
+     */
+    public function setPhoto($photo) {
+        $this->photo = $photo;
     }
 
-    public function unserialize($serialized) {
-        // TODO: Implement unserialize() method.
+    /**
+     * @param string $name
+     */
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+
+    /**
+     * @param int $userID
+     */
+    public function setUserID($userID) {
+        $this->userID = $userID;
+    }
+
+    /**
+     * @param int $galleryID
+     */
+    public function setGalleryID($galleryID) {
+        $this->galleryID = $galleryID;
+    }
+
+    public function validate() {
+        $this->errors = [];
+        if (!empty($this->name) && strlen($this->name) > 100) {
+            $this->errors["name"] = "Photo name can be up to 100 characters long.";
+        }
+
+        if ($this->description && strlen($this->description) > 500) {
+            $this->errors["description"] = "Photo description can be up to 500 characters long.";
+        }
+
+        if (empty($this->galleryID)) {
+            $this->errors["gallery"] = "Gallery is required.";
+        }
+
+        return empty($this->errors);
+    }
+
+    public function getErrors() {
+        return $this->errors;
     }
 
 }

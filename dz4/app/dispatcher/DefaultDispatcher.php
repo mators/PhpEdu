@@ -72,4 +72,8 @@ class DefaultDispatcher implements Dispatcher {
         $controller->$action();
     }
 
+    public function getMatched() {
+        return $this->matchedRoute;
+    }
+
 }

@@ -30,5 +30,5 @@ R::registerRoutes([
     R::route("/users/(?P<username>\\w+)/photos/(?P<id>\\d+)", "photo", "index", "viewPhoto"),
     R::route("/users/(?P<username>\\w+)/photos", "photo", "listPhotos", "listPhotos"),
 
-    R::route("/getPhoto/(?P<id>\\d+)/(?P<size>or|sm|md|lg)", "photo", "getResized", "getPhoto")
+    R::route("/getStats/(?P<id>\\d+)", "photo", "getStats", "getStats")
 ]);

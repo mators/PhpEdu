@@ -26,7 +26,7 @@ class Gallery implements Model {
      * Naslov galerije.
      * @var string
      */
-    private $title;
+    private $name;
 
     /**
      * Identifikator korisnika.
@@ -34,18 +34,20 @@ class Gallery implements Model {
      */
     private $userID;
 
+    private $errors;
+
     /**
      * Stvara novu galeriju
      *
      * @param $galleryID int
      * @param $description string
-     * @param $title string
+     * @param $name string
      * @param $userID string
      */
-    public function __construct($galleryID, $description, $title, $userID) {
+    public function __construct($description, $name, $userID, $galleryID = null) {
         $this->galleryID = $galleryID;
         $this->description = $description;
-        $this->title = $title;
+        $this->name = $name;
         $this->userID = $userID;
     }
 
@@ -66,8 +68,8 @@ class Gallery implements Model {
     /**
      * @return string
      */
-    public function getTitle() {
-        return $this->title;
+    public function getName() {
+        return $this->name;
     }
 
     /**
@@ -77,16 +79,36 @@ class Gallery implements Model {
         return $this->userID;
     }
 
-    public function equals(Model $model) {
-        // TODO: Implement equals() method.
+    /**
+     * @param string $description
+     */
+    public function setDescription($description) {
+        $this->description = $description;
     }
 
-    public function serialize() {
-        // TODO: Implement serialize() method.
+    /**
+     * @param string $name
+     */
+    public function setName($name) {
+        $this->name = $name;
     }
 
-    public function unserialize($serialized) {
-        // TODO: Implement unserialize() method.
+    public function validate() {
+        if (!$this->name) {
+            $this->errors["name"] = "Gallery name is required.";
+        } else if (strlen($this->name) > 100) {
+            $this->errors["name"] = "Gallery name can be up to 100 characters long.";
+        }
+
+        if ($this->description && strlen($this->description) > 500) {
+            $this->errors["description"] = "Gallery description can be up to 500 characters long.";
+        }
+
+        return empty($this->errors);
+    }
+
+    public function getErrors() {
+        return $this->errors;
     }
 
 }

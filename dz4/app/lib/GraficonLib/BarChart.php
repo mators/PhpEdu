@@ -1,6 +1,6 @@
 <?php
 
-namespace hr\sofascore\dz3\graficonlib;
+namespace app\lib\graficonlib;
 
 
 /**
@@ -19,7 +19,7 @@ class BarChart extends AxesChart {
         $black = imagecolorallocate($im, 0, 0, 0);
 
         // Border
-        $this->draw_border($im);
+        //$this->draw_border($im);
 
         // Title
         $this->draw_title($im);

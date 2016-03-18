@@ -11,6 +11,10 @@ class Router {
         self::$routes[$name] = $route;
     }
 
+    /**
+     * @param $name
+     * @return Route|null
+     */
     public static function getRoute($name) {
         return element($name, self::$routes);
     }

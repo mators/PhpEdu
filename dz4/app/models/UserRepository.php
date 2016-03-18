@@ -2,30 +2,84 @@
 
 namespace app\models;
 
-use app\oipa\model\Model;
 use app\oipa\model\Repository;
 
 
-class UserRepository implements Repository {
+class UserRepository extends Repository {
 
+    private static $instance;
+
+    private function __construct() {}
+
+    public static function getInstance() {
+        if (null === self::$instance) {
+            self::$instance = new UserRepository();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * @param $id
+     * @return User|null
+     */
     public function get($id) {
-        // TODO: Implement get() method.
+        return parent::get($id);
     }
 
-    public function getAll(array $conditions = []) {
-        // TODO: Implement getAll() method.
+    /**
+     * @param $username
+     * @return User|null
+     */
+    public function getByUsername($username) {
+        return parent::getSingleOrNull([ "username" => $username]);
     }
 
-    public function save(Model $model) {
-        // TODO: Implement save() method.
+    /**
+     * @param $username
+     * @param $password
+     * @return User|null
+     */
+    public function getByUsernameAndPassword($username, $password) {
+        return parent::getSingleOrNull([ "username" => $username, "password" => sha1($password) ]);
     }
 
-    public function update($id, Model $model) {
-        // TODO: Implement update() method.
+    public function save(User $user) {
+        return parent::save([
+            "firstname" => $user->getFirstName(),
+            "lastname" => $user->getLastName(),
+            "email" => $user->getEMail(),
+            "username" => $user->getUsername(),
+            "password" => $user->getPassword()
+        ]);
+    }
+
+    public function update(User $user) {
+        parent::update($user->getUserID(), [
+            "firstname" => $user->getFirstName(),
+            "lastname" => $user->getLastName(),
+            "email" => $user->getEMail(),
+            "username" => $user->getUsername(),
+            "password" => $user->getPassword()
+        ]);
     }
 
     public function delete($id) {
-        // TODO: Implement delete() method.
+        parent::delete($id);
+    }
+
+    protected function getTable() {
+        return "users";
+    }
+
+    protected function modelFromData($data) {
+        return new User(
+            $data->firstname,
+            $data->lastname,
+            $data->email,
+            $data->username,
+            $data->password,
+            $data->id
+        );
     }
 
 }

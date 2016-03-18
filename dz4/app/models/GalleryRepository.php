@@ -2,30 +2,65 @@
 
 namespace app\models;
 
-use app\oipa\model\Model;
 use app\oipa\model\Repository;
 
 
-class GalleryRepository implements Repository {
+class GalleryRepository extends Repository {
 
+    private static $instance;
+
+    private function __construct() {}
+
+    public static function getInstance() {
+        if (null === self::$instance) {
+            self::$instance = new GalleryRepository();
+        }
+        return self::$instance;
+    }
+
+    /**
+     * @param $id
+     * @return Gallery|null
+     */
     public function get($id) {
-        // TODO: Implement get() method.
+        return parent::get($id);
     }
 
-    public function getAll(array $conditions = []) {
-        // TODO: Implement getAll() method.
+    public function getByUser($userId) {
+        return parent::getAll(["user_id" => $userId]);
     }
 
-    public function save(Model $model) {
-        // TODO: Implement save() method.
+    public function save(Gallery $gallery) {
+        return parent::save([
+            "user_id" => $gallery->getUserID(),
+            "name" => $gallery->getName(),
+            "description" => $gallery->getDescription()
+        ]);
     }
 
-    public function update($id, Model $model) {
-        // TODO: Implement update() method.
+    public function update(Gallery $gallery) {
+        return parent::update($gallery->getGalleryID(), [
+            "user_id" => $gallery->getUserID(),
+            "name" => $gallery->getName(),
+            "description" => $gallery->getDescription()
+        ]);
     }
 
     public function delete($id) {
-        // TODO: Implement delete() method.
+        parent::delete($id);
+    }
+
+    public function getTable() {
+        return "galleries";
+    }
+
+    protected function modelFromData($data) {
+        return new Gallery(
+            $data->description,
+            $data->name,
+            $data->user_id,
+            $data->id
+        );
     }
 
 }

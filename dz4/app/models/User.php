@@ -46,6 +46,8 @@ class User implements Model {
      */
     private $password;
 
+    private $errors = [];
+
     /**
      * Stvara novog korisnika.
      *
@@ -56,7 +58,7 @@ class User implements Model {
      * @param $username string
      * @param $password string
      */
-    public function __construct($userID, $firstName, $lastName, $eMail, $username, $password) {
+    public function __construct($firstName, $lastName, $eMail, $username, $password, $userID = null) {
         $this->userID = $userID;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -104,19 +106,39 @@ class User implements Model {
      * @return string
      */
     public function getPassword() {
-        return $this->password;
+        return sha1($this->password);
     }
 
-    public function equals(Model $model) {
-        // TODO: Implement equals() method.
+    public function validate() {
+        if (!empty($this->firstName) && strlen($this->firstName) > 40) {
+            $this->errors["firstname"] = "First name can be up to 40 characters long.";
+        }
+
+        if (!empty($this->lastName) && strlen($this->lastName) > 40) {
+            $this->errors["lastname"] = "Last name can be up to 40 characters long.";
+        }
+
+        if (empty($this->username)) {
+            $this->errors["username"] = "Username is required.";
+        } else if (strlen($this->username) > 40) {
+            $this->errors["username"] = "Username can be up to 40 characters long.";
+        }
+
+        if (empty($this->eMail)) {
+            $this->errors["email"] = "E-mail is required.";
+        } else if (preg_match("/^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$/i", $this->eMail) != 1) {
+            $this->errors["email"] = "Invalid E-mail format.";
+        }
+
+        if (empty($this->password)) {
+            $this->errors["password"] = "Password is required.";
+        }
+
+        return empty($this->errors);
     }
 
-    public function serialize() {
-        // TODO: Implement serialize() method.
-    }
-
-    public function unserialize($serialized) {
-        // TODO: Implement unserialize() method.
+    public function getErrors() {
+        return $this->errors;
     }
 
 }

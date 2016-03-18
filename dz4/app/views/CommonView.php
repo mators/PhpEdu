@@ -26,6 +26,9 @@ class CommonView extends AbstractView {
             <!-- Bootstrap Core CSS -->
             <link href="/dz4/app/assets/css/bootstrap.min.css" rel="stylesheet">
 
+            <!-- Custom CSS -->
+            <link href="/dz4/app/assets/css/style.css" rel="stylesheet">
+
         </head>
         <body>
             <!-- Navigation -->
@@ -46,8 +49,8 @@ class CommonView extends AbstractView {
                         <ul class="nav navbar-nav">
                             <?php if(isLoggedIn()) { ?>
                                 <li><a href=<?php echo R::getRoute("index")->generate(); ?>>Home</a></li>
-                                <li><a href=<?php echo R::getRoute("listPhotos")->generate(); ?>>Photos</a></li>
-                                <li><a href=<?php echo R::getRoute("listGalleries")->generate(); ?>>Galleries</a></li>
+                                <li><a href=<?php echo R::getRoute("listPhotos")->generate(user()); ?>>Photos</a></li>
+                                <li><a href=<?php echo R::getRoute("listGalleries")->generate(user()); ?>>Galleries</a></li>
                             <?php } else { ?>
                                 <li><a href=<?php echo R::getRoute("index")->generate(); ?>>Home</a></li>
                             <?php } ?>
@@ -55,7 +58,7 @@ class CommonView extends AbstractView {
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <?php if(isLoggedIn()) { ?>
-                                <li><a href=<?php echo R::getRoute("editUser")->generate(["username" => "proba"]); ?>>Edit account</a></li>
+                                <li><a href=<?php echo R::getRoute("editUser")->generate(user()); ?>>Edit account</a></li>
                                 <li><a href=<?php echo R::getRoute("logout")->generate(); ?>>Logout</a></li>
                             <?php } else { ?>
                                 <li><a href=<?php echo R::getRoute("register")->generate(); ?>>Register</a></li>

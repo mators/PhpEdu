@@ -32,6 +32,10 @@ class DefaultRoute implements Route {
         }, $this->routeRegex);
     }
 
+    public function getParam($key, $d = "") {
+        return element($key, $this->params, $d);
+    }
+
     public function getController() {
         return ucfirst($this->controller) . "Controller";
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace hr\sofascore\dz3\graficonlib;
+namespace app\lib\graficonlib;
 
 
 /**

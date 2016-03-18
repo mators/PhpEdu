@@ -3,8 +3,10 @@
 namespace app\oipa\model;
 
 
-interface Model extends \Serializable {
+interface Model {
 
-    public function equals(Model $model);
+    public function validate();
+
+    public function getErrors();
 
 }
